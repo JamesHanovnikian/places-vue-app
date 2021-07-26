@@ -31,6 +31,7 @@
         <p> Address:  <input type="text" v-model="currentPlace.address"> </p>
 
         <button v-on:click="updatePlace(currentPlace);"> Update Place </button>
+        <button v-on:click="deletePlace(currentPlace)"> Delete Place </button>
         <button> Close </button>
       </form>
 
@@ -76,11 +77,15 @@ export default {
       this.currentPlace = place;
       document.querySelector("#place-details").showModal();
     },
-    updatePlace: function (currentPlace) {
+    updatePlace: function (place) {
       console.log("updating place.....");
-      axios.patch(`/places/${thePlace}`).then((response) => {
+      var editPlaceParams = place;
+      axios.patch("/places/" + place.id, editPlaceParams).then((response) => {
         console.log(response.data);
       });
+    },
+    deletePlace: function (place) {
+      console.log("deleting Place...");
     },
   },
 };
